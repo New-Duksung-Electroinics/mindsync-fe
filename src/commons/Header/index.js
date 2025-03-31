@@ -2,14 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from '../../assets/logo/logo.svg'; // SVG 파일 경로
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../store/authSlice'; // 로그아웃 액션
+
+import { logoutAsync } from 'src/store/authSlice'; // logoutAsync를 불러와야 함!
 
 const Header = () => {
   const dispatch = useDispatch();
   const username = useSelector(state => state.auth.username);  // Redux 상태에서 username 가져오기
 
   const handleLogout = () => {
-    dispatch(logout()); // 로그아웃 액션 디스패치
+    dispatch(logoutAsync()); // 로그아웃 액션 디스패치
   };
 
   return (

@@ -98,6 +98,31 @@ export async function checkEmail(email) {
       console.error('이메일 확인 중 오류 발생:', error);
     }
   }
+
+
+  export async function logout(){
+    try {
+      const response = await fetch('http://211.47.114.99:10/api/user/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const data = await response.json();
+      if(response.ok){
+        console.log('logout success : ', data.message);
+        return data;
+      } else {
+        console.error('logout fail : ', data.message);
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      console.error('server error', error);
+      throw error;
+    }
+    
+  }
   
 
   
