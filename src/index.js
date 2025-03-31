@@ -1,13 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+//import './index.css';
+import App from './core/App';
+import reportWebVitals from './core/reportWebVitals';
+import { Provider } from 'react-redux';
+import store from 'src/store';  // Redux 스토어를 가져옵니다.
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 
