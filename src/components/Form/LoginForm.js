@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import { login } from '../../services/user.js';  // 로그인 API 함수 불러오기
+import React, { useState, useEffect } from 'react';
+import { login } from '../../services/user.js'; // 로그인 API 함수 불러오기
+import { useDispatch, useSelector } from 'react-redux';
+import { setUsername } from 'src/store/authSlice.js';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false); // 로딩 상태 추가
+
+  const dispatch = useDispatch();  // 디스패치 함수 호출
+  const username = useSelector(state => state.auth.username);  // Redux 상태에서 username 가져오기
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,9 +25,16 @@ function LoginForm() {
       const response = await login(email, password);
 
       // 로그인 성공 후 처리
-      //console.log('로그인 성공:', response);
-      setError(''); // 에러 메시지 초기화
+      console.log('로그인 성공 in LoginForm:', response.username);
+      
       // 로그인 성공 후 리디렉션하거나 토큰 저장 등의 처리를 추가할 수 있습니다.
+       // 로그인 성공 후 사용자명 저장 (response.username은 실제 API 응답에서 받아오는 사용자명이어야 합니다)
+       if (response && response.username) {
+
+        console.log('ㅇㅅㅇ',response.data)
+        dispatch(setUsername(response.username));  // Redux 상태에 사용자명 저장
+      
+      }
 
     } catch (error) {
       // 로그인 실패 시 에러 처리
@@ -32,6 +44,11 @@ function LoginForm() {
       setLoading(false); // 로딩 종료
     }
   };
+
+    // 상태 변화 후 username을 로그로 확인
+    useEffect(() => {
+      console.log('저장된 사용자명:', username);  // 상태가 변경될 때마다 출력
+    }, [username]);
 
 
   return (

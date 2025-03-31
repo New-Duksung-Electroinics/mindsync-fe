@@ -60,9 +60,11 @@ export async function login(email, password) {
 
         if (status === 'SUCCESS') {
             console.log('로그인 성공:',data);
-            console.log('사용자명:', data.username);
-            console.log('Access Token:', response.headers.get('access')); // access token 헤더 값 확인
-            console.log('Refresh Token:', document.cookie.refresh);  // 쿠키에서 refresh token 확인
+            // console.log('사용자명:', data.username);
+            // console.log('Access Token:', response.headers.get('access')); // access token 헤더 값 확인
+            // console.log('Refresh Token:', document.cookie.refresh);  // 쿠키에서 refresh token 확인
+
+            return data;
         } else {
             console.log('로그인 실패:', message);
         }

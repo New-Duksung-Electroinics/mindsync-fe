@@ -22,7 +22,7 @@ const ChatRoom = () => {
     };
   
     return (
-    <div className="flex h-screen">
+    <div className="flex h-[100%]">
       <ParticipantList isOpen={isOpen} toggleOpen={toggleOpen} />
       <div className="flex flex-col flex-grow border-l shadow-lg bg-white">
         <div className="p-4 bg-blue-500 text-white font-bold text-lg">그룹 채팅방</div>
