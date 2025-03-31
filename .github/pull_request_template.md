@@ -1,13 +1,14 @@
-## 🧰 변경 타입
-* [x] 🤹 FEATURE	: 기능 추가  
-* [ ] 🔧 FIX		: 버그 수정  
-* [ ] 🗑️ DELETE	: 파일 삭제  
-* [ ] 🎨 DESIGN	: 디자인 작업  
-* [ ] 💬 COMMENT	: 주석 작성  
-* [ ] 📄 DOCS 	: 문서 작업  
+## 🧰 Type
+* [x] 🤹 FEATURE	: new funtion
+* [ ] 🔧 FIX		: fix bug
+* [ ] 🗑️ DELETE	: delete files 
+* [ ]  🚚 MOVE        : move files
+* [ ] 🎨 DESIGN	: design  
+* [ ] 💬 COMMENT	: annotation 
+* [ ] 📄 DOCS 	: documentations
 
-## ✒️ 변경 내용
-* 여기에 작성
+## ✒️ Change 
+* wirte here changing content
 
-## 📢 주의 및 리뷰 요청
-* 여기에 작성
+## 📢 Caution and Request Review
+* write here caution and request for review
