@@ -1,12 +1,12 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './commons/Layout/index.js';
-import Home from './pages/MainPage/index.jsx';
-import Auth from './pages/LoginPage/index.js'
-import SignUpPage from './pages/SignUpPage/index.js'
-import CreateMeetingForm from './pages/MeetingSetupPage/index.js'
-import ChatRoom from './pages/ChatPage/index.js'
+import Layout from '../commons/Layout/index.js';
+import Home from '../pages/MainPage/index.jsx';
+import Auth from '../pages/LoginPage/index.js'
+import SignUpPage from '../pages/SignUpPage/index.js'
+import CreateMeetingForm from '../pages/MeetingSetupPage/index.js'
+import ChatRoom from '../pages/ChatPage/index.js'
 
 function App() {
   return (
