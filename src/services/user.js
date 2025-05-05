@@ -1,4 +1,5 @@
-// src/api/user.js
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
 /**
  * 회원가입 API 호출
  * @param {Object} data - 회원가입에 필요한 데이터
@@ -10,8 +11,10 @@
  */
 
 export async function joinUser(data) {
+  // undefined이면 문제 있음
+
     try {
-      const response = await fetch(`http://211.47.114.99:10/api/user/join`, {
+      const response = await fetch(`${API_BASE_URL}/v1/user/join`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -24,7 +27,7 @@ export async function joinUser(data) {
         const errorData = await response.json();
         throw new Error(errorData.message || '회원가입에 실패했습니다.');
       }
-  
+      
       return await response.json();
     } catch (error) {
       // 호출하는 쪽에서 에러 처리를 할 수 있도록 에러를 던집니다.
@@ -39,15 +42,16 @@ export async function joinUser(data) {
  * @returns {Promise<Object>} 로그인 응답 결과
  */
 export async function login(email, password) {
+  console.log('API_BASE_URL:', API_BASE_URL); 
     try {
         // 로그인 요청
-        const response = await fetch(`http://211.47.114.99:10/api/user/login`, {
-            method: 'POST',  // HTTP 메서드는 'POST'
+        const response = await fetch(`${API_BASE_URL}/v1/user/login`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password }),  // JSON.stringify로 바디 설정
-            credentials: 'include',  // 쿠키를 포함한 요청
+            body: JSON.stringify({ email, password }), 
+            credentials: 'include',
         });
 
         if (!response.ok) {
@@ -57,14 +61,15 @@ export async function login(email, password) {
         }
 
         const { status, message, data } = await response.json();
+        const accessToken = response.headers.get('access');
 
         if (status === 'SUCCESS') {
             console.log('로그인 성공:',data);
-            // console.log('사용자명:', data.username);
-            // console.log('Access Token:', response.headers.get('access')); // access token 헤더 값 확인
-            // console.log('Refresh Token:', document.cookie.refresh);  // 쿠키에서 refresh token 확인
 
-            return data;
+            return {
+              ...data,
+              accessToken,
+          };
         } else {
             console.log('로그인 실패:', message);
         }
@@ -73,10 +78,9 @@ export async function login(email, password) {
     }
 }
 
-// user.js
 export async function checkEmail(email) {
     try {
-      const response = await fetch('http://211.47.114.99:10/api/user/check-email', {
+      const response = await fetch(`${API_BASE_URL}/v1/user/check-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +91,7 @@ export async function checkEmail(email) {
   
       if (response.ok) {
         if (data.status === "ERROR") {
-          console.log(data.message); // "이미 가입된 사용자입니다."
+          console.log(data.message);
         } else {
           console.log('사용 가능한 이메일입니다.');
         }
@@ -99,10 +103,9 @@ export async function checkEmail(email) {
     }
   }
 
-
   export async function logout(){
     try {
-      const response = await fetch('http://211.47.114.99:10/api/user/logout', {
+      const response = await fetch(`${API_BASE_URL}/v1/user/logout`, {
         method: 'POST',
         credentials: 'include',
         headers: {
