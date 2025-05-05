@@ -23,19 +23,12 @@ function LoginForm() {
     setLoading(true); // 로딩 시작
     try {
       const response = await login(email, password);
-
       // 로그인 성공 후 처리
       console.log('로그인 성공 in LoginForm:', response.username);
-      
-      // 로그인 성공 후 리디렉션하거나 토큰 저장 등의 처리를 추가할 수 있습니다.
-       // 로그인 성공 후 사용자명 저장 (response.username은 실제 API 응답에서 받아오는 사용자명이어야 합니다)
+    
        if (response && response.username) {
-
-        console.log('ㅇㅅㅇ',response.data)
         dispatch(setUsername(response.username));  // Redux 상태에 사용자명 저장
-      
       }
-
     } catch (error) {
       // 로그인 실패 시 에러 처리
       console.error('로그인 실패:', error.message);
