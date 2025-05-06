@@ -9,10 +9,7 @@ const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
  * @param {string} data.usermbti - 사용자 MBTI (예: "ESFP")
  * @returns {Promise<Object>} API 응답 결과
  */
-
 export async function joinUser(data) {
-  // undefined이면 문제 있음
-
     try {
       const response = await fetch(`${API_BASE_URL}/v1/user/join`, {
         method: 'POST',
@@ -21,16 +18,13 @@ export async function joinUser(data) {
         },
         body: JSON.stringify(data),
       });
-  
       if (!response.ok) {
         // 에러 응답 처리: 응답 본문을 파싱 후 에러를 던집니다.
         const errorData = await response.json();
         throw new Error(errorData.message || '회원가입에 실패했습니다.');
       }
-      
       return await response.json();
     } catch (error) {
-      // 호출하는 쪽에서 에러 처리를 할 수 있도록 에러를 던집니다.
       throw error;
     }
   }
@@ -68,6 +62,7 @@ export async function login(email, password) {
 
             return {
               ...data,
+              useremail: email,  // 추가할 useremail 값
               accessToken,
           };
         } else {
