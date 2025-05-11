@@ -22,9 +22,9 @@ export const loginAsync = createAsyncThunk(
 // 🚪 로그아웃 Thunk
 export const logoutAsync = createAsyncThunk(
   'auth/logoutAsync',
-  async (_, { rejectWithValue }) => {
+  async (accessToken, { rejectWithValue }) => {
     try {
-      await logoutService(); // 서버에 로그아웃 요청
+      await logoutService(accessToken); // 서버에 로그아웃 요청
       return true;
     } catch (error) {
       return rejectWithValue(error.message);
