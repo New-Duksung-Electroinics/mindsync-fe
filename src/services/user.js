@@ -1,5 +1,4 @@
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
-
 /**
  * 회원가입 API 호출
  * @param {Object} data - 회원가입에 필요한 데이터
@@ -83,7 +82,6 @@ export async function checkEmail(email) {
         body: JSON.stringify({ email }),
       });
       const data = await response.json();
-  
       if (response.ok) {
         if (data.status === "ERROR") {
           console.log(data.message);
@@ -98,13 +96,15 @@ export async function checkEmail(email) {
     }
   }
 
-  export async function logout(){
+  export async function logout(accessToken){
     try {
+      console.log("user.js",accessToken)
       const response = await fetch(`${API_BASE_URL}/v1/user/logout`, {
         method: 'POST',
         credentials: 'include',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization' : `Bearer ${accessToken}`
         }
       });
       const data = await response.json();
@@ -119,7 +119,6 @@ export async function checkEmail(email) {
       console.error('server error', error);
       throw error;
     }
-    
   }
   
 
