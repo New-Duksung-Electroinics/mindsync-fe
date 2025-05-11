@@ -6,6 +6,7 @@ const ChatInput = ({ roomId, name, email, agendaId, onSend }) => {
   const [message, setMessage] = useState("");
 
   const sendMessage = () => {
+    // 문자열 양쪽 공백 제거 + 메세지가 비어 있으면 함수 실행을 멈추고 return 한다. 
     if (!message.trim()) return;
 
     const now = new Date();
@@ -20,11 +21,17 @@ const ChatInput = ({ roomId, name, email, agendaId, onSend }) => {
     };
 
     sendStompMessage(`/app/chat/${roomId}/send`, messageObj);
+    // ✅ 프론트 상태에도 추가 (화면에 표시되게 함)
+    // 컴포넌트에서 전달된 콜백함수수
+    onSend({
+      sender: "me",
+      message: message
+    });
+
+    // 메세지 입력창 초기화
     setMessage("");
   };
 
-  
-  
     return (
       <div className="flex p-2 border-t bg-white">
         <input
