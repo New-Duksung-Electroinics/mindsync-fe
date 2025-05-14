@@ -43,7 +43,7 @@ function SignupForm() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    name: '',
+    username: '',
     usermbti: '',
   });
 
@@ -74,19 +74,17 @@ function SignupForm() {
       // 이메일 확인 먼저 수행
       const isEmailValid = await checkEmail(email);
       // 이메일이 유효하지 않으면 회원가입 진행하지 않음
+      
       if (!isEmailValid) {
         alert('유효하지 않은 이메일입니다. 다시 확인해주세요.');
         return;
+      }else{
+        console.log('정상')
       }
-
-      // 이메일이 유효하면 회원가입 진행
-      const response = await joinUser(formData);
-      alert('회원가입 성공! 🎉');
-      console.log('회원가입 성공:', response);
       
     } catch (error) {
-      alert(error.message || '회원가입 중 오류가 발생했습니다.');
-      console.error('회원가입 실패:', error);
+      alert(error.message || '아메일 확인 중 중 오류가 발생했습니다.');
+      console.error('이메일 확인인 실패:', error);
     }
     };
 
@@ -116,7 +114,6 @@ function SignupForm() {
       alert("🚨 답변을 선택해주세요!"); // 🚨 경고창
       return;
     }
-
     if(currentQuestion === questions.length - 1){
       console.log('마지막')
       alert('마지막')
@@ -124,7 +121,6 @@ function SignupForm() {
   
     if (currentQuestion < questions.length - 1) {
       console.log(currentQuestion)
-      console.log(questions.length)
       setCurrentQuestion(currentQuestion + 1);
     }
   };
@@ -136,22 +132,6 @@ function SignupForm() {
     }
   };
 
-  const submitSignUp = () => {
-    const resultMbti = getMostSelectedAnswers(userAnswers).join("")
-    console.log("최종 MBTI 조합:", formData); // ✅ "ESTJ"
-    setMbti(resultMbti);
-    setFormData({
-      ...formData, // 기존 formData를 유지하고,
-      email: email,
-      password: password,
-      name: name,
-      usermbti: mbti,
-    });
-    console.log(formData)
-    //handleSubmit()
-  }
-
-  // formData가 변경될 때마다 실행되는 useEffect
   useEffect(() => {
     console.log("formData가 업데이트되었습니다:", formData);
   }, [formData]);
@@ -183,11 +163,26 @@ function SignupForm() {
 
     // 회원가입 버튼 클릭 시 실행될 함수
   const handleSubmit = async (e) => {
+
+    const resultMbti = getMostSelectedAnswers(userAnswers).join("")
+    
+    setMbti(resultMbti);
+
+    setFormData({
+      ...formData, // 기존 formData를 유지하고,
+      email: email,
+      password: password,
+      username: name,
+      usermbti: resultMbti,
+    });
+
       e.preventDefault();
+      
       try {
       const response = await joinUser(formData);
       alert('회원가입 성공! 🎉');
       console.log('회원가입 성공:', response);
+        console.log('제출', formData);
       } catch (error) {
       alert(error.message || '회원가입 중 오류가 발생했습니다.');
       console.error('회원가입 실패:', error);
@@ -198,7 +193,8 @@ function SignupForm() {
   return (
     <div className="max-w-md mx-auto mt-10 p-5 border rounded-md shadow-lg">
       <h2 className="text-2xl font-bold mb-4 text-center">회원가입</h2>
-        <form onSubmit={handleSubmit}>
+        <form >
+      
           {/* 1단계: 기본 정보 입력 */}
           {step === 1 && (  
             <>
@@ -313,7 +309,7 @@ function SignupForm() {
                 )}
 
                 {/* 다음 버튼 */}
-                {currentQuestion < questions.length - 1 ? (
+                {currentQuestion !== questions.length - 1 ? (
                   <button
                     type="button"
                     className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
@@ -323,9 +319,9 @@ function SignupForm() {
                   </button>
                 ) : (
                   <button
-                    type="submit"
+                    type="button"
                     className="py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                    onClick={submitSignUp}
+                    onClick={handleSubmit}
                   >
                     회원가입
                   </button>

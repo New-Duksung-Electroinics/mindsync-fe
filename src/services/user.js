@@ -85,8 +85,9 @@ export async function checkEmail(email) {
       if (response.ok) {
         if (data.status === "ERROR") {
           console.log(data.message);
+          return false;
         } else {
-          console.log('사용 가능한 이메일입니다.');
+          return true;
         }
       } else {
         throw new Error(data.message || '에러 발생');
